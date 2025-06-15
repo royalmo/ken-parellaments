@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KEN-Parellaments</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.css">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-light py-5">
+<div class="container">
+  <h1 class="mb-4 text-center">KEN-parellaments</h1>
+  <form method="POST" action="/make-pairings" onsubmit="return handleSubmit()">
+
+    <div class="mb-4">
+      <h4>Dades principals</h4>
+      <div class="row">
+        <div class="col-6">
+          <label for="numDaysInput">Número de dies</label>
+          <input type="number" id="numDaysInput" name="numDays" class="form-control">
+        </div>
+        <div class="col-6">
+          <label for="numRoundsInput">Rondes per dia</label>
+          <input type="number" id="numRoundsInput" name="numRounds" class="form-control">
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <h4>Equips</h4>
+        <ul id="teamList" class="editable-list list-unstyled"></ul>
+        <div class="input-group mt-2">
+          <input type="text" id="teamInput" class="form-control" placeholder="Afegir nou equip">
+          <button type="button" class="btn btn-primary" onclick="addItem('team')">Afegir</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h4>Esports</h4>
+        <ul id="sportList" class="editable-list list-unstyled"></ul>
+        <div class="input-group mt-2">
+          <input type="text" id="sportInput" class="form-control" placeholder="Afegir nou esport">
+          <button type="button" class="btn btn-primary" onclick="addItem('sport')">Afegir</button>
+        </div>
+      </div>
+    </div>
+
+    <input type="hidden" name="teams" id="teamsHidden">
+    <input type="hidden" name="sports" id="sportsHidden">
+    <input type="hidden" name="exclusions" id="exclusionsHidden">
+    <input type="hidden" name="musthaves" id="musthavesHidden">
+
+    <hr/>
+
+    <div class="mb-4">
+      <h4>Exclusions</h4>
+      <div class="row g-2 mb-2">
+        <div class="col-md-5">
+          <select id="excludeTeam1" class="form-select"></select>
+        </div>
+        <div class="col-md-5">
+          <select id="excludeTeam2" class="form-select"></select>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-danger w-100" onclick="addExclusion()">Excloure</button>
+        </div>
+      </div>
+      <ul id="exclusionList" class="editable-list list-unstyled"></ul>
+    </div>
+
+    <hr/>
+
+    <div class="mb-4">
+      <h4>Esports obligatoris (cada equip participa en com a mínim un de cada grup)</h4>
+      <div id="mustHaveContainer"></div>
+      <button type="button" class="btn btn-secondary mt-2" onclick="addMustHaveGroup()">Afegir grup</button>
+    </div>
+
+    <hr/>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-lg btn-success">Genera</button>
+    </div>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script src="/pairings.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", async function(event) { 
+    const jsonData = await loadJSON('/data.json');
+    initPairings(jsonData);
+  });
+</script>
+</body>
+</html>
