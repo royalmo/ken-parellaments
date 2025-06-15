@@ -274,12 +274,19 @@ function addExclusion(t1, t2) {
     ul.appendChild(li);
 }
 
+function getLiContent(li) {
+    const span = li.querySelector('span.editable-span');
+    if (span) return span.textContent.trim();
+    const input = li.querySelector('input');
+    return input ? input.value.trim() : '';
+}
+
 function handleSubmit() {
     document.getElementById('teamsHidden').value = [...document.getElementById('teamList').children]
-        .map(li => li.querySelector('span.editable-span').textContent.trim()) // TODO
+        .map(li => getLiContent(li))
         .join('\n');
     document.getElementById('sportsHidden').value = [...document.getElementById('sportList').children]
-        .map(li => `${li.querySelector('span.editable-span').textContent.trim()},${[...li.querySelectorAll('.day-btn.checked')].map(e => e.textContent.trim()).join(',')}`) // TODO when edited?
+        .map(li => `${getLiContent(li)},${[...li.querySelectorAll('.day-btn.checked')].map(e => e.textContent.trim()).join(',')}`)
         .join('\n');
     document.getElementById('exclusionsHidden').value = [...document.getElementById('exclusionList').children]
         .map(li => li.dataset.pair)
