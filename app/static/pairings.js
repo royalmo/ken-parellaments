@@ -276,10 +276,10 @@ function addExclusion(t1, t2) {
 
 function handleSubmit() {
     document.getElementById('teamsHidden').value = [...document.getElementById('teamList').children]
-        .map(li => li.querySelector('span.editable-span').textContent.trim())
+        .map(li => li.querySelector('span.editable-span').textContent.trim()) // TODO
         .join('\n');
     document.getElementById('sportsHidden').value = [...document.getElementById('sportList').children]
-        .map(li => `${li.querySelector('span.editable-span').textContent.trim()},${[...li.querySelectorAll('.day-btn.checked')].map(e => e.textContent.trim()).join(',')}`)
+        .map(li => `${li.querySelector('span.editable-span').textContent.trim()},${[...li.querySelectorAll('.day-btn.checked')].map(e => e.textContent.trim()).join(',')}`) // TODO when edited?
         .join('\n');
     document.getElementById('exclusionsHidden').value = [...document.getElementById('exclusionList').children]
         .map(li => li.dataset.pair)
