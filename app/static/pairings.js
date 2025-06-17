@@ -43,7 +43,7 @@ function renderTeamList(listId, items) {
     });
 }
 
-function renderSportsList(listId, items) {
+function renderSportsList(listId, items, numDays) {
     const ul = document.getElementById(listId);
     ul.innerHTML = '';
     items.forEach(item => {
@@ -60,7 +60,8 @@ function renderSportsList(listId, items) {
         span.appendChild(daysDiv);
         renderDaysDiv(daysDiv);
         item[1].forEach((day) => {
-            toggleDayCheck(daysDiv.querySelector(`.day-${day}`));
+            if (day <= numDays)
+                toggleDayCheck(daysDiv.querySelector(`.day-${day}`));
         })
 
         const delBtn = document.createElement('button');
@@ -309,7 +310,7 @@ function initPairings(jsonData) {
     document.getElementById('numRoundsInput').value = jsonData.num_rounds;
 
     renderTeamList('teamList', jsonData.teams);
-    renderSportsList('sportList', jsonData.sports);
+    renderSportsList('sportList', jsonData.sports, jsonData.num_days);
     Sortable.create(document.getElementById('teamList'), { animation: 150 });
     Sortable.create(document.getElementById('sportList'), { animation: 150 });
     updateTeamSelectors();
@@ -324,6 +325,6 @@ function initPairings(jsonData) {
     });
 
     document.getElementById('numDaysInput').onchange = function () {
-        document.getElementsByClassName('days-div').forEach((e) => renderDaysDiv(e))
+        Array.from(document.getElementsByClassName('days-div')).forEach((e) => renderDaysDiv(e));
     }
 }
