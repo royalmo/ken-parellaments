@@ -137,8 +137,8 @@ def generate_pairings(strict=False):
     sports = json_contents["sports"]
     exclusions = json_contents["exclusions"]
 
-    num_days = json_contents["num_days"]
-    num_rounds = json_contents["num_rounds"]
+    num_days = int(json_contents["num_days"])
+    num_rounds = int(json_contents["num_rounds"])
     musts = json_contents["musts"]
 
     rounds = generate_multiple_rounds(teams, exclusions, num_rounds=num_rounds*num_days)
@@ -182,8 +182,7 @@ def print_rounds(assigned):
         for t1, t2, sport in r:
             print(f"  {t1} vs {t2} in {sport}")
 
-if __name__=="__main__":
-    random.seed(42)
+def generate_best_pairings():
     assigneds = []
     penalizations = []
 
@@ -191,12 +190,16 @@ if __name__=="__main__":
         assigned, penalization = generate_pairings()
         assigneds.append(assigned)
         penalizations.append(penalization)
-    
+
+    return assigneds[penalizations.index(min(penalizations))], min(penalizations)
+
+if __name__=="__main__":
+    random.seed(42)   
     with open(JSON_FILE_PATH, 'r') as f:
         json_contents = json.load(f)
     musts = json_contents["musts"]
 
-    print(f"Best penalization: {min(penalizations)}")
-    best_assigned = assigneds[penalizations.index(min(penalizations))]
+    best_assigned, best_penalization = generate_best_pairings()
+    print(f"Best penalization: {best_penalization}")
     get_penalization(best_assigned, musts, do_print=True)
-    print_rounds(best_assigned)
+    #print_rounds(best_assigned)
