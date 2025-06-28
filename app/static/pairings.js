@@ -308,6 +308,9 @@ async function loadJSON(url) {
 function initPairings(jsonData) {
     document.getElementById('numDaysInput').value = jsonData.num_days;
     document.getElementById('numRoundsInput').value = jsonData.num_rounds;
+    document.getElementById('startHourInput').value = jsonData.start_time_hour;
+    document.getElementById('startMinInput').value = jsonData.start_time_min;
+    document.getElementById('startDayInput').value = jsonData.start_day;
 
     renderTeamList('teamList', jsonData.teams);
     renderSportsList('sportList', jsonData.sports, jsonData.num_days);

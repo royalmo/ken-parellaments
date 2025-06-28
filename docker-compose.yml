@@ -6,3 +6,5 @@ services:
     ports:
       - "4200:4200"
     restart: unless-stopped
+    volumes:
+      - ./app/data/data.json:/app/app/data/data.json

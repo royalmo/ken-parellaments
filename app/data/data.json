@@ -1,6 +1,9 @@
 {
     "num_days" : 3,
     "num_rounds" : 8,
+    "start_day" : 7,
+    "start_time_hour" : 19,
+    "start_time_min" : 30,
     "teams" : [
         "Equip 1",
         "Equip 2",

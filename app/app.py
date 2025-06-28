@@ -32,12 +32,19 @@ def index():
         sport_contents[sport] = rounds
 
     num_rounds = int(json_contents["num_rounds"])
+    num_days = int(json_contents["num_days"])
+    start_day = int(json_contents["start_day"])
 
-    # CONSTANTS (FOR NOW)
-    day_names = [f"{i} de Juliol" for i in [7,8,9]]
+    # July is constant for now
+    day_names = [f"{i} de Juliol" for i in range(start_day, start_day+num_days)]
+
+    # Constants for now
     ROUND_DURATION = 10 # minutes
     TIME_BETWEEN_ROUNDS = 5 # minutes
-    START_TIME = [19, 30]
+
+    start_time_min = int(json_contents["start_time_min"])
+    start_time_hour = int(json_contents["start_time_hour"])
+    START_TIME = [start_time_hour, start_time_min]
     
     start_dt = datetime(2000, 1, 1, START_TIME[0], START_TIME[1])
     round_names = []
@@ -51,7 +58,7 @@ def index():
                            team_contents=team_contents,
                            sport_contents=sport_contents,
                            num_rounds = num_rounds,
-                           num_days = int(json_contents["num_days"]),
+                           num_days = num_days,
                            day_names = day_names,
                            round_names = round_names,
                            )
