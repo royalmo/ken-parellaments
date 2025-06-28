@@ -144,13 +144,16 @@ def generate_pairings(strict=False):
     rounds = generate_multiple_rounds(teams, exclusions, num_rounds=num_rounds*num_days)
     assigned = []
 
-    # First two days go as a group
-    todays_sports = [x[0] for x in sports if 1 in x[1]]
-    todays_rounds = rounds[:2*num_rounds]
-    todays_musts = [x for x in musts if x[0] in todays_sports]
-    assigned += assign_sports_to_rounds(todays_rounds, todays_sports, todays_musts)
+    start_days = 0
+    if num_days > 2:
+        # First two days go as a group
+        start_days=2
+        todays_sports = [x[0] for x in sports if 1 in x[1]]
+        todays_rounds = rounds[:2*num_rounds]
+        todays_musts = [x for x in musts if x[0] in todays_sports]
+        assigned += assign_sports_to_rounds(todays_rounds, todays_sports, todays_musts)
 
-    for day_num in range(2, num_days):
+    for day_num in range(start_days, num_days):
         todays_sports = [x[0] for x in sports if day_num+1 in x[1]]
         todays_rounds = rounds[day_num*num_rounds:(day_num+1)*num_rounds]
         todays_musts = [x for x in musts if x[0] in todays_sports]
