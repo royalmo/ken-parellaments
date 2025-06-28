@@ -12,10 +12,10 @@ def store_request_to_json(args):
         "start_day" : args.get("startDay"),
         "start_time_hour" : args.get("startHour"),
         "start_time_min" : args.get("startMin"),
-        "teams" : args.get("teams").replace('\r', '').split('\n'),
+        "teams" : [s for s in args.get("teams").replace('\r', '').split('\n') if s != ""],
         "sports" : [[s.split(',')[0], [int(x) for x in s.split(',')[1:]]] for s in args.get("sports").replace('\r', '').split('\n')],
-        "exclusions" : [s.split(',') for s in args.get("exclusions").replace('\r', '').split('\n')],
-        "musts" : [s.split(',') for s in args.get("musthaves").replace('\r', '').split('\n')],
+        "exclusions" : [s.split(',') for s in args.get("exclusions").replace('\r', '').split('\n') if s != ""],
+        "musts" : [s.split(',') for s in args.get("musthaves").replace('\r', '').split('\n') if s != ""],
     }
     with open(JSON_FILE_PATH, 'w') as f:
         json.dump(new_json, f, indent=4)

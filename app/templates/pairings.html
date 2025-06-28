@@ -108,10 +108,10 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-<script src="/static/pairings.js"></script>
+<script src="/static/pairings.js?v=2"></script>
 <script>
   document.addEventListener("DOMContentLoaded", async function(event) { 
-    const jsonData = await loadJSON('/data.json');
+    const jsonData = await loadJSON(`/data.json?v=${Date.now()}`);
     initPairings(jsonData);
   });
 </script>
